@@ -1,0 +1,59 @@
+Si devono assegnare i posti per una cena (fra ex compagni di scuola, 
+colleghi, ...).
+Ognuno pu� avere preferenze su chi avere o non avere come vicino.
+
+Supponiamo di avere un numero pari di partecipanti e di considerare 
+i posti numerati come segue ad es per 14 partecipanti:
+
+   2  3  4  5  6  7 
+ 1                   8
+  14 13 12 11 10  9 
+
+Per un dato posto, consideriamo "vicini" i posti a sinistra, destra e di 
+fronte sui lati lunghi (es 4 ha come vicini 3, 5, e 12; 1 ha vicini 2 e 14).
+Consideriamo "quasi vicini" i posti quasi di fronte sui lati lunghi
+(es 4 ha come quasi vicini 11 e 13).
+
+Se i partecipanti sono dati come:
+
+p(a).
+p(b).
+p(c).
+...
+
+si pu� sapere quanti sono con: 
+
+num(N) :- N = #count { X : p(X) }.
+
+e dato tale numero, si vede che i posti di fronte hanno somma N+2 
+(e quelli "quasi vicini...)
+
+I posti possibili possono essere definiti con:
+
+posto(1..N) :- num(N).
+
+Quindi una delle regole per definire "postovicino" per due numeri di 
+posti pu� essere:
+
+postovicino(K,M) :- posto(K),posto(M),num(N),K+M=N+2.
+
+Supponiamo di avere in input richieste del tipo:
+
+vuole(a,b).
+nv(b,c).
+
+corrispondenti al fatto che a vuole stare vicino a b, e b non vuole stare 
+vicino a c.
+
+Vogliamo trovare (se esiste) un'assegnazione dei posti secondo 
+quanto segue:
+
+A) se X non vuole Y, non mettere vicini X e Y 
+
+B) e possibilmente non metterli quasi vicini 
+
+C) con minor priorit� rispetto al punto precedente, possibilmente mettere 
+X vicino a Y, se X vuole Y e non risulta che Y non voglia X
+
+Nel risultato va indicata l'assegnazione dei posti e le eventuali coppie 
+di partecipanti per i quali risultano violate le condizioni B o C.

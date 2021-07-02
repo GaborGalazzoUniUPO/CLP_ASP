@@ -1,0 +1,1 @@
+"D:\Gabor\DIDATTICA\UNI\IV_ANNO\logica\ECLiPSe 7.0\tcltk\x86_64_nt\bin\wish85.exe" "D:\Gabor\DIDATTICA\UNI\IV_ANNO\logica\ECLiPSe 7.0\lib_tcl\tkeclipse.tcl"
