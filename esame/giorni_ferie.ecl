@@ -38,8 +38,12 @@ eval_rules(_,_,0,[]).
 eval_rules(Age,Service,Extra,[R|L]):-G=..[R,Age,Service,CurrentResult], call(G), eval_rules(Age,Service,RemaningResult,L), {Extra = CurrentResult + RemaningResult}.
 
 eval_mutexrules(_,_,0,[]).
-eval_mutexrules(Age,Service,Extra,[R|_]):-G=..[R,Age,Service,Extra], call(G), {Extra > 0}.
-eval_mutexrules(Age,Service,Extra,[R|L]):-G=..[R,Age,Service,0], call(G), eval_mutexrules(Age,Service,Extra,L).
+%eval_mutexrules(Age,Service,Extra,[R|_]):-G=..[R,Age,Service,Extra], call(G), {Extra > 0}.
+%eval_mutexrules(Age,Service,Extra,[R|L]):-G=..[R,Age,Service,0], call(G), eval_mutexrules(Age,Service,Extra,L).
+
+eval_mutexrules(Age,Service,Extra,[R|L]):-G=..[R,Age,Service,Extra], call(G), eval_mutexrules(Age,Service,Extra2,L), {Extra > Extra2}.
+eval_mutexrules(Age,Service,Extra,[R|L]):-G=..[R,Age,Service,Extra1], call(G), eval_mutexrules(Age,Service,Extra,L), {Extra >= Extra1}.
+
 
 giorni_ferie_g(Age,Service,Total,Base,Rules,MutexRules):-
     eval_rules(Age,Service,Extra1,Rules),
@@ -48,6 +52,6 @@ giorni_ferie_g(Age,Service,Total,Base,Rules,MutexRules):-
 
 % giorni_ferie_g(30,1,X,22,[r2],[r1,r3]) 22
 % giorni_ferie_g(30,20,X,22,[r2],[r1,r3]) 24
-% giorni_ferie_g(30,30,X,22,[r2],[r1,r3]) 24
 % giorni_ferie_g(40,30,X,22,[r2],[r1,r3]) 30
 % giorni_ferie_g(60,30,X,22,[r2],[r1,r3]) 30
+
